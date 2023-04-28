@@ -42,8 +42,10 @@ class GoDataProcessor:
 
         sampler = Sampler(data_dir=self.data_dir)
         data = sampler.draw_data(data_type, num_samples)
+        print(f'<load_go_data(...)>: sampled/drawn data of length {len(data)}')
 
         self.map_to_workers(data_type, data)  # <1>
+        print('map_to_workers(...) finished!')
         if use_generator:
             generator = DataGenerator(self.data_dir, data)
             return generator  # <2>
@@ -186,6 +188,7 @@ class GoDataProcessor:
                                         data_file_name, indices_by_zip_name[zip_name]))
 
         cores = multiprocessing.cpu_count()  # Determine number of CPU cores and split work load among them
+        print(f'This system has {cores} cores')
         pool = multiprocessing.Pool(processes=cores)
         p = pool.map_async(worker, zips_to_process)
         try:

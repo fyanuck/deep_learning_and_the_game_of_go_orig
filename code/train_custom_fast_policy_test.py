@@ -22,8 +22,8 @@ test_generator = processor.load_go_data('test', num_games, use_generator=True)
 input_shape = (encoder.num_planes, rows, cols)
 
 # Модель на 5 (или 6) слоёв вместо 12 (или 13)
-num_filters=192,
-first_kernel_size=5,
+num_filters=192
+first_kernel_size=5
 other_kernel_size=3
 alphago_sl_policy = Sequential()
 alphago_sl_policy.add(

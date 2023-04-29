@@ -124,6 +124,7 @@ class GoDataProcessor:
             np.save(label_file, current_labels)
 
     def consolidate_games(self, name, samples):
+        print('consolidate_games(...)')
         files_needed = set(file_name for file_name, index in samples)
         file_names = []
         for zip_file_name in files_needed:
@@ -152,6 +153,8 @@ class GoDataProcessor:
 
         np.save(feature_file, features)
         np.save(label_file, labels)
+
+        print(f'Saved features to {feature_file}, labels to {label_file}')
 
         return features, labels
 

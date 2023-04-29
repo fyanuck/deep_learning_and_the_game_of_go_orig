@@ -51,7 +51,7 @@ alphago_sl_policy.fit(
     y=train_y,
     batch_size=128,
     callbacks=[ModelCheckpoint('alphago_sl_policy_{epoch}.h5')],
-    validation_data=test_x, test_y
+    validation_data=(test_x, test_y)
 )
 
 

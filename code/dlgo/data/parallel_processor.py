@@ -90,7 +90,7 @@ class GoDataProcessor:
                 print(f'{c+1}/{len(game_list)} skipping handicaped game ...')
                 continue
             
-            print(f'{c+1}/{len(game_list)} this game is in processing (process_zip(...))')
+            print(f'{c+1}/{len(game_list)} ({(c/len(game_list)*100.0):.2f}%) this game is in processing (process_zip(...))')
 
             game_state, first_move_done = self.get_handicap(sgf)
 

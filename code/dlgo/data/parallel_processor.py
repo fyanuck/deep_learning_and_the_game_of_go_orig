@@ -80,6 +80,7 @@ class GoDataProcessor:
         labels = np.zeros((total_examples,))
 
         counter = 0
+        game_counter = 0
         for c, index in enumerate(game_list):
             name = name_list[index + 1]
             if not name.endswith('.sgf'):
@@ -91,6 +92,7 @@ class GoDataProcessor:
                 continue
             
             print(f'{c+1}/{len(game_list)} ({(c/len(game_list)*100.0):.2f}%) this game is in processing (process_zip(...))')
+            game_counter += 1
 
             game_state, first_move_done = self.get_handicap(sgf)
 
@@ -110,6 +112,8 @@ class GoDataProcessor:
                         counter += 1
                     game_state = game_state.apply_move(move)
                     first_move_done = True
+        
+        print(f'process_zip(...) saving data from {game_counter} games out of {len(game_list)} intended')
 
         feature_file_base = self.data_dir + '/' + data_file_name + '_features_%d'
         label_file_base = self.data_dir + '/' + data_file_name + '_labels_%d'

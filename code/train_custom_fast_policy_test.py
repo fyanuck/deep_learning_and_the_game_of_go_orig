@@ -49,7 +49,9 @@ batch_size = 128
 alphago_sl_policy.fit(
     x=train_x,
     y=train_y,
-    batch_size=
+    batch_size=128,
+    callbacks=[ModelCheckpoint('alphago_sl_policy_{epoch}.h5')],
+    validation_data=test_x, test_y
 )
 
 
@@ -64,11 +66,16 @@ alphago_sl_policy.fit(
 
 alphago_sl_agent = DeepLearningAgent(alphago_sl_policy, encoder)
 
-with h5py.File('alphago_sl_policy.h5', 'w') as sl_agent_out:
+with h5py.File('alphago_sl_policy_simple_test.h5', 'w') as sl_agent_out:
     alphago_sl_agent.serialize(sl_agent_out)
 # end::alphago_sl_train[]
 
-alphago_sl_policy.evaluate_generator(
-    generator=test_generator.generate(batch_size, num_classes),
-    steps=test_generator.get_num_samples() / batch_size
+alphago_sl_policy.evaluate(
+    x=test_x,
+    y=test_y
 )
+
+# alphago_sl_policy.evaluate_generator(
+#     generator=test_generator.generate(batch_size, num_classes),
+#     steps=test_generator.get_num_samples() / batch_size
+# )

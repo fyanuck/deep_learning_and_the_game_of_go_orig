@@ -89,6 +89,8 @@ class GoDataProcessor:
             if sgf.get_handicap() is not None and sgf.get_handicap() != 0:
                 print(f'{c+1}/{len(game_list)} skipping handicaped game ...')
                 continue
+            
+            print(f'{c+1}/{len(game_list)} this game is in processing (process_zip(...))')
 
             game_state, first_move_done = self.get_handicap(sgf)
 
@@ -122,6 +124,7 @@ class GoDataProcessor:
             current_labels, labels = labels[:chunksize], labels[chunksize:]
             np.save(feature_file, current_features)
             np.save(label_file, current_labels)
+            print(f'process_zip(...): saved features to {feature_file}, labels to {label_file}')
 
     def consolidate_games(self, name, samples):
         print('consolidate_games(...)')

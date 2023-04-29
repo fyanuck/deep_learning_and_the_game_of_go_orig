@@ -29,7 +29,7 @@ def worker(jobinfo):
 
 
 class GoDataProcessor:
-    def __init__(self, encoder='simple', data_directory='data'):
+    def __init__(self, encoder='simple', data_directory='data', use_local_files=False):
         self.encoder_string = encoder
         self.encoder = get_encoder_by_name(encoder, 19)
         self.data_dir = data_directory
@@ -44,9 +44,10 @@ class GoDataProcessor:
         data = sampler.draw_data(data_type, num_samples)
         print(f'<load_go_data(...)>: sampled/drawn data of length {len(data)}')
 
-        print(f'Starting workers with data of length {len(data)}, example: {data[0]}')
-        self.map_to_workers(data_type, data)  # <1>
-        print('map_to_workers(...) finished!')
+        if not use_local_files:
+            print(f'Starting workers with data of length {len(data)}, example: {data[0]}')
+            self.map_to_workers(data_type, data)  # <1>
+            print('map_to_workers(...) finished!')
         if use_generator:
             generator = DataGenerator(self.data_dir, data)
             return generator  # <2>
